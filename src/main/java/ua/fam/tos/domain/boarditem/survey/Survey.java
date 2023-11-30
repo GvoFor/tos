@@ -65,4 +65,9 @@ public class Survey extends BoardItem implements Submittable {
         return submissionStatuses;
     }
 
+    @Override
+    public boolean isKnowAboutContributorWithUsername(String username){
+        return ((submissionStatuses.containsKey(username))||
+                (getCreator().getUsername().equals(username)));
+    }
 }

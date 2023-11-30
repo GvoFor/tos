@@ -42,4 +42,6 @@ public abstract class BoardItem {
 	public void setCreator(Contributor creator) {
 		this.creator = creator;
 	}
+
+	abstract public boolean isKnowAboutContributorWithUsername(String username);
 }

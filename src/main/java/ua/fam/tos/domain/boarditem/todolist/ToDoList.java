@@ -32,4 +32,9 @@ public class ToDoList extends BoardItem{
         }
         return null;
     }
+
+    @Override
+    public boolean isKnowAboutContributorWithUsername(String username) {
+        return (getCreator().getUsername().equals(username));
+    }
 }

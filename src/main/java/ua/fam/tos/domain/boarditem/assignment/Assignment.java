@@ -157,4 +157,10 @@ public class Assignment extends BoardItem implements Approvable, Submittable, At
             case UNSUBMITTED -> throw new ApprovalException("An assignment wasn't submitted");
         }
     }
+    @Override
+    public boolean isKnowAboutContributorWithUsername(String username){
+        return (approver.getUsername().equals(username))||
+                (executor.getUsername().equals(username))||
+                (getCreator().getUsername().equals(username));
+    }
 }

@@ -11,7 +11,10 @@ import ua.fam.tos.domain.boarditem.assignment.Assignment;
 import ua.fam.tos.domain.boarditem.material.Material;
 import ua.fam.tos.domain.boarditem.survey.Survey;
 import ua.fam.tos.domain.boarditem.todolist.ToDoList;
-import ua.fam.tos.service.BoardItemService;
+import ua.fam.tos.dto.AssignmentDTO;
+import ua.fam.tos.dto.MaterialDTO;
+import ua.fam.tos.dto.SurveyDTO;
+import ua.fam.tos.dto.ToDoListDTO;
 import ua.fam.tos.service.BoardService;
 
 import java.security.Principal;
@@ -22,11 +25,9 @@ import java.util.Optional;
 public class BoardItemController {
 
     private final BoardService boardService;
-    private final BoardItemService boarditemService;
 
-    public BoardItemController(BoardService boardService, BoardItemService boarditemService) {
+    public BoardItemController(BoardService boardService) {
         this.boardService = boardService;
-        this.boarditemService = boarditemService;
     }
 
     @GetMapping("/{itemId}")
@@ -53,27 +54,27 @@ public class BoardItemController {
 
         if (item instanceof Material) {
             model.addAttribute("material",
-                    boarditemService.getMaterialDTO((Material) item));
+                    new MaterialDTO((Material) item));
             return "material";
         }
 
         if (item instanceof Assignment) {
             model.addAttribute("assignment",
-                    boarditemService.getAssignmentDTO((Assignment) item));
+                    new AssignmentDTO((Assignment) item));
             return "assignment";
         }
 
 
         if (item instanceof Survey) {
             model.addAttribute("survey",
-                    boarditemService.getSurveyDTO((Survey) item));
+                    new SurveyDTO((Survey) item));
             return "survey";
         }
 
 
         if (item instanceof ToDoList) {
             model.addAttribute("todolist",
-                    boarditemService.getToDoListDTO((ToDoList) item));
+                    new ToDoListDTO((ToDoList) item));
             return "todolist";
         }
 

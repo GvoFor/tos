@@ -16,6 +16,7 @@ import ua.fam.tos.dto.MaterialDTO;
 import ua.fam.tos.dto.SurveyDTO;
 import ua.fam.tos.dto.ToDoListDTO;
 import ua.fam.tos.service.BoardService;
+import ua.fam.tos.service.MaterialService;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -54,7 +55,7 @@ public class BoardItemController {
 
         if (item instanceof Material) {
             model.addAttribute("material",
-                    new MaterialDTO((Material) item));
+                    MaterialService.getMaterialDTO((Material) item));
             return "material";
         }
 

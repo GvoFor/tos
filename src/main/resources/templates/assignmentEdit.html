@@ -65,12 +65,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
-                    <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-primary">Discard</a>
+                    <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Discard</a>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/save|}">
-                        <input type="submit" class="btn btn-primary" value="Save">
+                        <input type="submit" class="btn btn-success" value="Save">
                     </form>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
-                        <input type="submit" class="btn btn-primary" value="Delete">
+                        <input type="submit" class="btn btn-danger" value="Delete">
                     </form>
                 </div>
 

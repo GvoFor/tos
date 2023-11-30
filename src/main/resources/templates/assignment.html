@@ -84,7 +84,7 @@
                     <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/approve|}">
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Approve">
                     </form>
-                    <a th:if="${username.equals(assignment.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-primary">Edit</a>
+                    <a th:if="${username.equals(assignment.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
                 </div>
             </div>
         </div>

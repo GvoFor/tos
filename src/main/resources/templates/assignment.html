@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="container py-4 d-flex justify-content-center">
+            <div class="h-100 p-5 w-75">
+                <div class="d-flex justify-content-between">
+                    <h2 th:text="${assignment.title}">#assignment_title#</h2>
+                    <div>
+                        <span class="text-success" th:if="${assignment.isApproved()}">
+                            Approved
+                        </span>
+                        <span class="text-primary" th:if="${assignment.isSubmitted()}">
+                            Submitted
+                        </span>
+                        <span class="text-danger" th:if="${assignment.isUnsubmitted()}">
+                            Not submitted
+                        </span>
+                    </div>
+                </div>
+                <p class="text-secondary" th:text="|Publised at ${assignment.publicationTime}|"></p>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Task</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div class="mb-5">
+                    <p th:text="${assignment.text}"></p>
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Attachments</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Your Attachments</h4>
+                    <hr class="col m-auto">
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

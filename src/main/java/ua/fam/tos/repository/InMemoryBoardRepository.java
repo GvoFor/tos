@@ -58,6 +58,7 @@ public class InMemoryBoardRepository implements BoardRepository {
         kate.setUsername("kate");
         b = new Board();
         b.setId(1);
+        b.setTitle("Kate's first board");
         b.setOwner(kate);
         Survey s1 = new Survey();
         s1.setTitle("Survey title 1");

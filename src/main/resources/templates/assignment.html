@@ -29,7 +29,10 @@
                         </span>
                     </div>
                 </div>
-                <p class="text-secondary" th:text="|Publised at ${assignment.publicationTime}|"></p>
+                <div class="d-flex justify-content-between">
+                    <p class="text-secondary" th:text="|Publised at ${assignment.publicationTime}|"></p>
+                    <p class="text-secondary" th:text="'Deadline: ' + (${assignment.deadline} ? ${assignment.deadline} : 'Not assigned')"></p>
+                </div>
 
                 <div class="row">
                     <hr class="col m-auto">
@@ -49,30 +52,39 @@
 
                 <div th:each="attachment : ${assignment.attachments}">
                     <div class="d-flex gap-5 mt-1">
-                        <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.getTitle()}"></a>
-                        <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}/delete|}">
-                            <input type="submit" class="btn-close" aria-label="Close" value="" />
-                        </form>
+                        <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
                     </div>
                 </div>
 
                 <div class="row">
                     <hr class="col m-auto">
-                    <h4 class="col-auto m-auto">Your Attachments</h4>
+                    <h4 class="col-auto m-auto" th:if="${username.equals(assignment.executorUsername)}">Your Attachments</h4>
+                    <h4 class="col-auto m-auto" th:if="${!username.equals(assignment.executorUsername)}">Executor Attachments</h4>
                     <hr class="col m-auto">
                 </div>
 
-                <div class="mb-3 mt-5">
+                <div class="mb-3 mt-2" th:if="${username.equals(assignment.executorUsername) and assignment.isUnsubmitted()}">
                     <form class="d-flex gap-5" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
+                        <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                         <input class="form-control w-auto" type="file" name="file" id="attachForm">
                         <input type="submit" class="btn btn-outline-secondary" value="Attach"/>
                     </form>
                 </div>
 
-                <div class="d-flex justify-content-center align-items-center mt-2">
-                    <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submit|}">
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                <div class="d-flex justify-content-center align-items-center mt-2 gap-2">
+                    <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/cancel|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Cancel">
                     </form>
+                    <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/submit|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isUnsubmitted() ? '' : ' disabled'}" value="Submit">
+                    </form>
+                    <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/decline|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Decline">
+                    </form>
+                    <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/approve|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Approve">
+                    </form>
+                    <a th:if="${username.equals(assignment.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

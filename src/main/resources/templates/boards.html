@@ -15,13 +15,13 @@
 <main>
     <div class="container py-4 d-flex justify-content-center">
         <div class="d-flex flex-wrap justify-content-center gap-2">
-            <div style="width:30%" th:each="board : ${boards}">
+            <div style="min-width:30%" th:each="board : ${boards}">
                 <div class="h-100 p-5 bg-body-secondary border rounded-3" >
                     <h2 th:text="${board.title}">#board_title#</h2>
                     <a th:href="@{|/boards/${board.id}/items|}" class="btn btn-outline-secondary">View</a>
                 </div>
             </div>
-            <div class="d-flex justify-content-center align-items-center" style="width:30%">
+            <div class="d-flex justify-content-center align-items-center" style="min-width:30%">
                 <form method="post" th:action="@{/boards/new}">
                     <input type="submit" class="btn btn-outline-primary" value="Create new">
                 </form>

@@ -93,6 +93,10 @@ public class AssignmentDTO {
         return status == AssignmentStatus.UNSUBMITTED;
     }
 
+    public AssignmentStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(AssignmentStatus status) {
         this.status = status;
     }

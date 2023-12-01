@@ -105,7 +105,7 @@
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                             </svg>
-                            <span th:text="${assignment.creatorUsername == username ? 'You' : assignment.creatorUsername}"></span>
+                            <span th:text="${assignment.creatorUsername + (assignment.creatorUsername == username ? ' (You)' : '')}"></span>
                         </div>
                     </div>
                     <div class="rounded bg-dark p-3 w-100">
@@ -115,7 +115,7 @@
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                             </svg>
-                            <span th:text="${assignment.approverUsername == username ? 'You' : assignment.approverUsername}"></span>
+                            <span th:text="${assignment.approverUsername + (assignment.approverUsername == username ? ' (You)' : '')}"></span>
                         </div>
                     </div>
                     <div class="rounded bg-dark p-3 w-100">
@@ -125,7 +125,7 @@
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                             </svg>
-                            <span th:text="${assignment.executorUsername == username ? 'You' : assignment.executorUsername}"></span>
+                            <span th:text="${assignment.executorUsername + (assignment.executorUsername == username ? ' (You)' : '')}"></span>
                         </div>
                     </div>
                 </div>

@@ -73,12 +73,48 @@
                     </form>
                 </div>
 
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Roles</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div class="d-flex justify-content-evenly align-items-center gap-5 mt-3">
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Creator</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${assignment.creatorUsername} + ' (You)'"></span>
+                            <input th:field="${assignment.creatorUsername}" form="assignmentForm" type="hidden" th:value="${assignment.creatorUsername}">
+                        </div>
+                    </div>
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Approver</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <input th:field="${assignment.approverUsername}" form="assignmentForm" type="text" placeholder="Approver username" th:value="${assignment.approverUsername}">
+                        </div>
+                    </div>
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Executor</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <input th:field="${assignment.executorUsername}" form="assignmentForm" type="text" placeholder="Executor username" th:value="${assignment.executorUsername}">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
                     <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Discard</a>
-                    <!--<form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/save/assignment|}">
-                        <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
-                        <input type="submit" class="btn btn-success" value="Save">
-                    </form>-->
                     <button type="submit" form="assignmentForm" class="btn btn-success" >Save</button>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete/assignment|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">

@@ -19,6 +19,8 @@ public class AssignmentDTO {
     private List<AttachmentDTO> creatorAttachments;
     private List<AttachmentDTO> executorAttachments;
 
+    public AssignmentDTO() {}
+
     public AssignmentDTO(Assignment assignment) {
         creatorUsername = assignment.getCreator().getUsername();
         executorUsername = assignment.getExecutor().getUsername();

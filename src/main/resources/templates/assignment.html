@@ -52,7 +52,14 @@
 
                 <div th:each="attachment : ${assignment.creatorAttachments}">
                     <div class="d-flex gap-5 mt-1">
-                        <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
+                        <form class="d-flex justify-content-center align-items-center gap-1" method="get" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text text-primary" viewBox="0 0 16 16">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
+                        </form>
                     </div>
                 </div>
 
@@ -65,12 +72,19 @@
 
                 <div th:each="attachment : ${assignment.executorAttachments}">
                     <div class="d-flex gap-5 mt-1">
-                        <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
+                        <form class="d-flex justify-content-center align-items-center gap-1" method="get" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text text-primary" viewBox="0 0 16 16">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
+                        </form>
                     </div>
                 </div>
 
                 <div class="mb-3 mt-2" th:if="${username.equals(assignment.executorUsername) and assignment.isUnsubmitted()}">
-                    <form class="d-flex gap-5" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
+                    <form class="d-flex gap-2" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                         <input class="form-control w-auto" type="file" name="file" id="attachForm">
                         <input type="submit" class="btn btn-outline-secondary" value="Attach"/>

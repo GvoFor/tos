@@ -31,6 +31,17 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-2 dropup" th:if="${username == board.owner.get().username}">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Create new
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/material/new|}">Material</a>
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/assignment/new|}">Assignment</a>
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/survey/new|}">Survey</a>
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/todolist/new|}">ToDoList</a>
+                </div>
+            </div>
         </div>
     </div>
 </main>

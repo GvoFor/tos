@@ -131,6 +131,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-2 gap-2">
+                    <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Back</a>
                     <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/cancel|}">
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Cancel">
                     </form>

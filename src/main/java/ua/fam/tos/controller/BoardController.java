@@ -23,6 +23,7 @@ public class BoardController {
 
     @GetMapping
     public String showAllBoards(Model model, Principal user) {
+        model.addAttribute("username", user.getName());
         model.addAttribute("boards", service.getAllBoardsByUsername(user.getName()));
         return "boards";
     }
@@ -39,6 +40,7 @@ public class BoardController {
                 .anyMatch(contributor -> contributor.getUsername().equals(user.getName()))){
             return "redirect:/boards?error";
         }
+        model.addAttribute("username", user.getName());
         model.addAttribute("board", board);
         return "board";
     }

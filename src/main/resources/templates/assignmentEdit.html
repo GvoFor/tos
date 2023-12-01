@@ -46,7 +46,7 @@
                         <hr class="col m-auto">
                     </div>
                 </form>
-                <div th:each="attachment : ${assignment.attachments}">
+                <div th:each="attachment : ${assignment.creatorAttachments}">
                     <div class="d-flex gap-5 mt-1">
                         <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
                         <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}/delete|}">

@@ -50,7 +50,7 @@
                     <hr class="col m-auto">
                 </div>
 
-                <div th:each="attachment : ${assignment.attachments}">
+                <div th:each="attachment : ${assignment.creatorAttachments}">
                     <div class="d-flex gap-5 mt-1">
                         <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
                     </div>
@@ -61,6 +61,12 @@
                     <h4 class="col-auto m-auto" th:if="${username.equals(assignment.executorUsername)}">Your Attachments</h4>
                     <h4 class="col-auto m-auto" th:if="${!username.equals(assignment.executorUsername)}">Executor Attachments</h4>
                     <hr class="col m-auto">
+                </div>
+
+                <div th:each="attachment : ${assignment.executorAttachments}">
+                    <div class="d-flex gap-5 mt-1">
+                        <a href="#" th:href="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}" th:text="${attachment.title}"></a>
+                    </div>
                 </div>
 
                 <div class="mb-3 mt-2" th:if="${username.equals(assignment.executorUsername) and assignment.isUnsubmitted()}">

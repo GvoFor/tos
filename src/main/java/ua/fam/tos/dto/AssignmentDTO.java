@@ -16,7 +16,8 @@ public class AssignmentDTO {
     private Date deadline;
     private AssignmentStatus status;
     private String text;
-    private List<AttachmentDTO> attachments;
+    private List<AttachmentDTO> creatorAttachments;
+    private List<AttachmentDTO> executorAttachments;
 
     public AssignmentDTO(Assignment assignment) {
         creatorUsername = assignment.getCreator().getUsername();
@@ -27,8 +28,14 @@ public class AssignmentDTO {
         status = assignment.getStatus();
         deadline = assignment.getDeadline();
         publicationTime = assignment.getPublicationTime();
-        attachments = assignment.getAttachments()
+        creatorAttachments = assignment.getAttachments()
                 .stream()
+                .filter(attachment -> attachment.getAttacher().equals(assignment.getCreator()))
+                .map(AttachmentDTO::new)
+                .toList();
+        executorAttachments = assignment.getAttachments()
+                .stream()
+                .filter(attachment -> attachment.getAttacher().equals(assignment.getExecutor()))
                 .map(AttachmentDTO::new)
                 .toList();
     }
@@ -109,11 +116,19 @@ public class AssignmentDTO {
         this.text = text;
     }
 
-    public List<AttachmentDTO> getAttachments() {
-        return attachments;
+    public List<AttachmentDTO> getCreatorAttachments() {
+        return creatorAttachments;
     }
 
-    public void setAttachments(List<AttachmentDTO> attachments) {
-        this.attachments = attachments;
+    public void setCreatorAttachments(List<AttachmentDTO> creatorAttachments) {
+        this.creatorAttachments = creatorAttachments;
+    }
+
+    public List<AttachmentDTO> getExecutorAttachments() {
+        return executorAttachments;
+    }
+
+    public void setExecutorAttachments(List<AttachmentDTO> executorAttachments) {
+        this.executorAttachments = executorAttachments;
     }
 }

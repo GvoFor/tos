@@ -10,29 +10,32 @@ import java.util.stream.Collectors;
 
 public class MaterialDTO {
 
+    private long id;
     private String title;
     private Date publicationTime;
     private String creatorUsername;
 
     public String text;
-    public List<String> attachmentTitles;
-
-    //NOT SURE
-    public List<String> viewerNameList;
+    public List<AttachmentDTO> attachments;
 
     public MaterialDTO(Material material){
+        this.id = material.getId();
         this.title = material.getTitle();
         this.publicationTime = material.getPublicationTime();
         this.creatorUsername = material.getCreator().getUsername();
         this.text = material.getText();
-        this.attachmentTitles = material.getAttachments()
+        this.attachments = material.getAttachments()
                 .stream()
-                .map(Attachment::getTitle)
+                .map(AttachmentDTO::new)
                 .collect(Collectors.toList());
-        this.viewerNameList =material.getViewerList()
-                .stream()
-                .map(Contributor::getUsername)
-                .collect(Collectors.toList());;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -67,19 +70,13 @@ public class MaterialDTO {
         this.text = text;
     }
 
-    public List<String> getAttachmentTitles() {
-        return attachmentTitles;
+    public List<AttachmentDTO> getAttachments() {
+        return attachments;
     }
 
-    public void setAttachmentTitles(List<String> attachmentTitles) {
-        this.attachmentTitles = attachmentTitles;
+    public void setAttachments(List<AttachmentDTO> attachments) {
+        this.attachments = attachments;
     }
 
-    public List<String> getViewerNameList() {
-        return viewerNameList;
-    }
 
-    public void setViewerNameList(List<String> viewerNameList) {
-        this.viewerNameList = viewerNameList;
-    }
 }

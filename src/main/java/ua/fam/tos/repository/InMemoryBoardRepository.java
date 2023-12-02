@@ -50,4 +50,9 @@ public class InMemoryBoardRepository implements BoardRepository {
                 .filter(board -> board.hasContributorWithUsername(username))
                 .toList();
     }
+
+    @Override
+    public void deleteById(long id) {
+        boards.removeIf(board -> board.getId() == id);
+    }
 }

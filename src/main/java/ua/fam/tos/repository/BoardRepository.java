@@ -10,5 +10,6 @@ public interface BoardRepository {
     List<Board> findAll();
     Optional<Board> findById(long id);
     List<Board> findAllByUsername(String username);
+    void deleteById(long id);
 
 }

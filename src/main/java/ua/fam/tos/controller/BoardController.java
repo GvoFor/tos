@@ -64,6 +64,12 @@ public class BoardController {
         return "redirect:/boards/" + id + "/items";
     }
 
+    @PostMapping("{id}/delete")
+    public String deleteBoard(@PathVariable long id) {
+        service.deleteBoardById(id);
+        return "redirect:/boards";
+    }
+
     @PostMapping("/new")
     public String newBoard(Principal user) {
         Optional<Contributor> ownerOptional = contributorRepository.findContributorByUsername(user.getName());

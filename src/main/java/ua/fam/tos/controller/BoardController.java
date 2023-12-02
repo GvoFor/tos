@@ -2,7 +2,9 @@ package ua.fam.tos.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ua.fam.tos.domain.Board;
+import ua.fam.tos.domain.Contributor;
 import ua.fam.tos.dto.BoardDTO;
+import ua.fam.tos.repository.ContributorRepository;
 import ua.fam.tos.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class BoardController {
 
     private final BoardService service;
+    private final ContributorRepository contributorRepository;
 
-    public BoardController(BoardService service) {
+    public BoardController(BoardService service, ContributorRepository contributorRepository) {
         this.service = service;
+        this.contributorRepository = contributorRepository;
     }
 
     @GetMapping
@@ -58,5 +62,21 @@ public class BoardController {
         }
 
         return "redirect:/boards/" + id + "/items";
+    }
+
+    @PostMapping("/new")
+    public String newBoard(Principal user) {
+        Optional<Contributor> ownerOptinal = contributorRepository.findContributorByUsername(user.getName());
+        if (ownerOptinal.isEmpty()) {
+            System.out.println();
+            return "redirect:/boards?error";
+        }
+
+        Board board = new Board();
+        board.setId(-1);
+        board.setTitle("New board");
+        board.setOwner(ownerOptinal.get());
+        long savedId = service.saveBoard(board);
+        return "redirect:/boards/" + savedId + "/items";
     }
 }

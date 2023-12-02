@@ -15,7 +15,7 @@
     <main>
         <div class="container py-4 d-flex justify-content-center">
             <div class="h-100 p-5 w-75">
-                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/save/material|}">
+                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/material/save|}">
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{title}" type="text" placeholder="Material title">
@@ -90,7 +90,7 @@
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
                     <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Discard</a>
                     <button type="submit" form="materialForm" class="btn btn-success" >Save</button>
-                    <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete/material|}">
+                    <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">
                         <input type="submit" class="btn btn-danger" value="Delete">
                     </form>

@@ -1,7 +1,5 @@
 package ua.fam.tos.dto;
 
-import ua.fam.tos.domain.Contributor;
-import ua.fam.tos.domain.boarditem.Attachment;
 import ua.fam.tos.domain.boarditem.material.Material;
 
 import java.util.Date;
@@ -17,6 +15,8 @@ public class MaterialDTO {
 
     public String text;
     public List<AttachmentDTO> attachments;
+
+    public MaterialDTO(){}
 
     public MaterialDTO(Material material){
         this.id = material.getId();

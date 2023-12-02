@@ -55,7 +55,7 @@ public class BoardItemController {
 
         if (item instanceof Material) {
             model.addAttribute("material",
-                    MaterialService.getMaterialDTO((Material) item));
+                    new MaterialDTO((Material) item));
             return "material";
         }
 

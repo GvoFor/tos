@@ -15,7 +15,18 @@
 <main>
     <div class="container py-4">
         <div class="h-100 p-5 bg-body-secondary border rounded-3">
-            <h2 th:text="${board.title}">#board_title#</h2>
+            <div>
+                <div id="title1" class="d-flex gap-3">
+                    <h2 th:text="${board.title}" class="my-auto">#board_title#</h2>
+                    <button id="renameButton" th:if="${username == board.ownerName}" class="btn btn-primary">Rename</button>
+                </div>
+                <div id="title2" class="d-none gap-3">
+                    <form hidden id="renameForm" method="post" th:action="@{|/boards/${board.id}/rename|}"></form>
+                    <input class="h3 my-auto" form="renameForm" type="text" name="newTitle" th:value="${board.title}" placeholder="Board title">
+                    <input form="renameForm" type="submit" class="btn btn-primary" value="Rename">
+                </div>
+
+            </div>
             <hr>
             <div th:each="item : ${board.items}">
                 <div class="mt-2 p-4 bg-white border rounded-3">
@@ -44,6 +55,17 @@
             </div>
         </div>
     </div>
+    <script>
+        $("#renameButton").click(event => {
+            let title1 = $("#title1")
+            title1.removeClass("d-flex")
+            title1.addClass("d-none")
+
+            let title2 = $("#title2")
+            title2.removeClass("d-none")
+            title2.addClass("d-flex")
+        })
+    </script>
 </main>
 </body>
 </html>

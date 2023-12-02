@@ -27,7 +27,7 @@ public class BoardService {
         return repository.findById(id);
     }
 
-    public void saveBoard(Board board) {
-        repository.save(board);
+    public long saveBoard(Board board) {
+        return repository.save(board);
     }
 }

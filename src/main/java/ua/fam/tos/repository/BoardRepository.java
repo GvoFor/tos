@@ -6,9 +6,10 @@ import java.util.Optional;
 
 public interface BoardRepository {
 
-    void save(Board board);
+    long save(Board board);
     List<Board> findAll();
     Optional<Board> findById(long id);
     List<Board> findAllByUsername(String username);
+    void deleteById(long id);
 
 }

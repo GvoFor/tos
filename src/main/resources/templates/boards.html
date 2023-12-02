@@ -19,6 +19,10 @@
                 <div class="h-100 p-5 bg-body-secondary border rounded-3" >
                     <h2 th:text="${board.title}">#board_title#</h2>
                     <a th:href="@{|/boards/${board.id}/items|}" class="btn btn-outline-secondary">View</a>
+                    <form hidden id="deleteForm" method="post" th:action="@{|/boards/${board.id}/delete|}">
+                        <input type="hidden" name="redirectUrl" th:value="|/boards|">
+                    </form>
+                    <input th:if="${username == board.ownerName}" form="deleteForm" type="submit" class="btn btn-outline-danger" value="Delete">
                 </div>
             </div>
             <div class="d-flex justify-content-center align-items-center" style="min-width:30%">

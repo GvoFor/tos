@@ -58,7 +58,9 @@ public class Board {
     }
 
     public void addContributor(Contributor contributor) {
-        contributors.add(contributor);
+        if (!contributor.equals(owner)) {
+            contributors.add(contributor);
+        }
     }
 
     public void deleteContributorByUsername(String username) {

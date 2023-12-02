@@ -53,6 +53,38 @@
                     <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/todolist/new|}">ToDoList</a>
                 </div>
             </div>
+
+            <div th:if="${username == board.ownerName}">
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Contributors</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div id="contributorsContainer" th:each="contributorName : ${board.contributorNames}">
+                    <div class="d-flex align-items-center gap-2 mt-1">
+                        <div class="d-flex justify-content-center align-items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${contributorName}"></span>
+                        </div>
+                        <form class="d-flex align-items-center" method="post" th:action="@{|/boards/${board.id}/contributors/delete|}">
+                            <input type="hidden" name="contributorName" th:value="${contributorName}">
+                            <input type="submit" class="btn-close" aria-label="Close" value="" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mb-3 mt-2">
+                    <div class="d-flex gap-2">
+                        <form hidden id="newContributorForm" method="post" th:action="@{|/boards/${board.id}/contributors/new|}"></form>
+                        <input form="newContributorForm" class="form-control w-auto" type="text" name="newContributorName" placeholder="Contributor username">
+                        <button form="newContributorForm" class="btn btn-outline-secondary">Add contributor</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>

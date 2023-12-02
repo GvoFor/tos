@@ -66,8 +66,8 @@ public class BoardController {
 
     @PostMapping("/new")
     public String newBoard(Principal user) {
-        Optional<Contributor> ownerOptinal = contributorRepository.findContributorByUsername(user.getName());
-        if (ownerOptinal.isEmpty()) {
+        Optional<Contributor> ownerOptional = contributorRepository.findContributorByUsername(user.getName());
+        if (ownerOptional.isEmpty()) {
             System.out.println();
             return "redirect:/boards?error";
         }
@@ -75,8 +75,40 @@ public class BoardController {
         Board board = new Board();
         board.setId(-1);
         board.setTitle("New board");
-        board.setOwner(ownerOptinal.get());
+        board.setOwner(ownerOptional.get());
         long savedId = service.saveBoard(board);
         return "redirect:/boards/" + savedId + "/items";
     }
+
+    @PostMapping("{id}/contributors/new")
+    public String addNewContributor(@RequestParam("newContributorName") String contributorName,
+                                    @PathVariable long id) {
+        String redirectURL = "redirect:/boards/" + id + "/items";
+        Optional<Contributor> contributorOptional = contributorRepository.findContributorByUsername(contributorName);
+        if (contributorOptional.isEmpty()) {
+            System.out.println("Contributor not exist");
+            return redirectURL;
+        }
+
+        Optional<Board> boardOptional = service.getBoardById(id);
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            board.addContributor(contributorOptional.get());
+            service.saveBoard(board);
+        }
+        return redirectURL;
+    }
+
+    @PostMapping("{id}/contributors/delete")
+    public String deleteContributor(@RequestParam("contributorName") String contributorName,
+                                    @PathVariable long id) {
+        Optional<Board> boardOptional = service.getBoardById(id);
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            board.deleteContributorByUsername(contributorName);
+            service.saveBoard(board);
+        }
+        return "redirect:/boards/" + id + "/items";
+    }
+
 }

@@ -13,7 +13,7 @@ public class AttachmentController {
                                      @PathVariable long itemId,
                                      @PathVariable long attachmentId) {
         System.out.println("Downloading stuff...");
-        return "redirect:/boards/" + boardId + "items/" + itemId;
+        return "redirect:/boards/" + boardId + "/items/" + itemId;
     }
 
     @PostMapping("/{attachmentId}/delete")
@@ -21,7 +21,7 @@ public class AttachmentController {
                                    @PathVariable long itemId,
                                    @PathVariable long attachmentId) {
         System.out.println("Deleting stuff...");
-        return "redirect:/boards/" + boardId + "items/" + itemId;
+        return "redirect:/boards/" + boardId + "/items/" + itemId;
     }
 
     @PostMapping("/upload")
@@ -29,7 +29,7 @@ public class AttachmentController {
                                    @PathVariable long itemId,
                                    @RequestParam("file") MultipartFile file) {
         System.out.println("Uploading stuff...");
-        return "redirect:/boards/" + boardId + "items/" + itemId;
+        return "redirect:/boards/" + boardId + "/items/" + itemId;
     }
 
 }

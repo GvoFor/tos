@@ -17,21 +17,21 @@
         <div class="h-100 p-5 bg-body-secondary border rounded-3">
             <h2 th:text="${board.title}">#board_title#</h2>
             <hr>
-            <div th:each="item : ${board.allItems}">
+            <div th:each="item : ${board.items}">
                 <div class="mt-2 p-4 bg-white border rounded-3">
                     <h3 th:text="${item.title}">#item_title#</h3>
                     <p class="text-secondary">Published at: <span th:text="${item.publicationTime}">#item_publication_time#</span></p>
                     <div class="d-flex gap-2">
                         <a th:href="@{|/boards/${board.id}/items/${item.id}|}" class="btn btn-outline-secondary">View</a>
-                        <a th:if="${username == board.owner.get().username}" th:href="@{|/boards/${board.id}/items/${item.id}/edit|}" class="btn btn-outline-success">Edit</a>
+                        <a th:if="${username == board.ownerName}" th:href="@{|/boards/${board.id}/items/${item.id}/edit|}" class="btn btn-outline-success">Edit</a>
                         <form hidden id="deleteForm" method="post" th:action="@{|/boards/${board.id}/items/${item.id}/delete|}">
                             <input type="hidden" name="redirectUrl" th:value="|/boards/${board.id}/items|">
                         </form>
-                        <input th:if="${username == board.owner.get().username}" form="deleteForm" type="submit" class="btn btn-outline-danger" value="Delete">
+                        <input th:if="${username == board.ownerName}" form="deleteForm" type="submit" class="btn btn-outline-danger" value="Delete">
                     </div>
                 </div>
             </div>
-            <div class="mt-2 dropup" th:if="${username == board.owner.get().username}">
+            <div class="mt-2 dropup" th:if="${username == board.ownerName}">
                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Create new
                 </button>

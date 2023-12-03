@@ -9,8 +9,8 @@ import java.util.*;
 
 public class Survey extends BoardItem implements Submittable {
 
-    private final List<SurveyQuestion> questions;
-    private final Map<String, SurveyStatus> submissionStatuses;
+    private List<SurveyQuestion> questions;
+    private Map<String, SurveyStatus> submissionStatuses;
 
     public Survey() {
         this.questions = new ArrayList<>();
@@ -34,8 +34,10 @@ public class Survey extends BoardItem implements Submittable {
     }
 
 
-    public void addQuestion(String questionText){
-        questions.add(new SurveyQuestion(questionText));
+    public void addQuestion(String questionText) {
+        SurveyQuestion question = new SurveyQuestion();
+        question.setQuestionText(questionText);
+        questions.add(question);
     }
 
     public void deleteQuestionByIndex(int index){
@@ -47,6 +49,10 @@ public class Survey extends BoardItem implements Submittable {
 
     public List<SurveyQuestion> getQuestions(){
         return questions;
+    }
+
+    public void setQuestions(List<SurveyQuestion> questions){
+        this.questions = questions;
     }
 
     public Optional<SurveyQuestion> getQuestionByIndex(int index){
@@ -63,6 +69,10 @@ public class Survey extends BoardItem implements Submittable {
 
     public Map<String, SurveyStatus> getSubmissionStatuses() {
         return submissionStatuses;
+    }
+
+    public void setSubmissionStatuses(Map<String, SurveyStatus> submissionStatuses) {
+        this.submissionStatuses = submissionStatuses;
     }
 
     @Override

@@ -42,13 +42,4 @@ public class MaterialController {
     }
 
 
-
-    @PostMapping("/material/delete")
-    public String delete(@PathVariable long boardId,
-                         @PathVariable long itemId,
-                         @RequestParam String redirectUrl) {
-        System.out.println("Deleting...");
-        return "redirect:" + redirectUrl;
-    }
-
 }

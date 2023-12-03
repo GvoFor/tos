@@ -18,8 +18,8 @@
                 <form id="assignmentForm" th:object="${assignment}" method="post" th:action="@{|/boards/${boardId}/items/assignment/save|}">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{id}" type="hidden" th:value="*{id}">
-                        <input th:field="*{title}" type="text" placeholder="Assignment title">
-                        <select th:field="*{status}">
+                        <input class="h3" th:field="*{title}" type="text" placeholder="Assignment title">
+                        <select class="my-auto" th:field="*{status}">
                             <option th:each="status : ${T(ua.fam.tos.domain.boarditem.assignment.AssignmentStatus).values()}"
                                     th:value="${status}"
                                     th:text="${status}">

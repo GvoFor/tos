@@ -40,4 +40,14 @@ public class InMemoryBoardItemRepository implements BoardItemRepository {
         board.addItem(item);
         return item.getId();
     }
+
+    @Override
+    public Optional<BoardItem> findById(long boardId, long itemId) {
+        Optional<Board> boardOptional = boardRepository.findById(boardId);
+        if (boardOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        Board board = boardOptional.get();
+        return board.getItemById(itemId);
+    }
 }

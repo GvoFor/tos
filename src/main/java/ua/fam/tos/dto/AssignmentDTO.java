@@ -111,6 +111,10 @@ public class AssignmentDTO {
         return status == AssignmentStatus.UNSUBMITTED;
     }
 
+    public boolean isReadyForSubmit() {
+        return !executorAttachments.isEmpty();
+    }
+
     public AssignmentStatus getStatus() {
         return status;
     }

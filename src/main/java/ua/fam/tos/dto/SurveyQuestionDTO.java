@@ -2,12 +2,16 @@ package ua.fam.tos.dto;
 
 import ua.fam.tos.domain.boarditem.survey.SurveyQuestion;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SurveyQuestionDTO {
     private String questionText;
     private Map<String, String> userAnswers;
 
+    public SurveyQuestionDTO() {
+        userAnswers = new HashMap<>();
+    }
     public SurveyQuestionDTO(SurveyQuestion question) {
         this.questionText = question.getQuestionText();
         this.userAnswers = question.getUserAnswers();

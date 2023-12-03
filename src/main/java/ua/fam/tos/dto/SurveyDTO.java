@@ -4,25 +4,28 @@ import ua.fam.tos.domain.Contributor;
 import ua.fam.tos.domain.boarditem.survey.Survey;
 import ua.fam.tos.domain.boarditem.survey.SurveyStatus;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class SurveyDTO {
-    private Long id;
+    private long id;
     private String title;
     private Date publicationTime;
     private List<SurveyQuestionDTO> questions;
     private Map<String, SurveyStatus> submissionStatuses;
-    private Contributor creator;
+    private String creatorUsername;
+
+    public SurveyDTO() {
+        questions = new ArrayList<>();
+        submissionStatuses = new HashMap<>();
+    }
 
     public SurveyDTO(Survey survey) {
         this.questions = survey.getQuestions().stream()
                 .map(SurveyQuestionDTO::new)
                 .collect(Collectors.toList());
         this.submissionStatuses = survey.getSubmissionStatuses();
-        this.creator = survey.getCreator();
+        this.creatorUsername = survey.getCreator().getUsername();
         this.title = survey.getTitle();
         this.publicationTime = survey.getPublicationTime();
         this.id = survey.getId();
@@ -52,12 +55,12 @@ public class SurveyDTO {
         return submissionStatuses.get(username) == SurveyStatus.UNSUBMITTED;
     }
 
-    public void setCreator(Contributor creator) {
-        this.creator = creator;
+    public void setCreatorUsername(String creatorUsername) {
+        this.creatorUsername = creatorUsername;
     }
 
-    public Contributor getCreator() {
-        return creator;
+    public String getCreatorUsername() {
+        return creatorUsername;
     }
 
     public String getTitle() {
@@ -80,7 +83,7 @@ public class SurveyDTO {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 }

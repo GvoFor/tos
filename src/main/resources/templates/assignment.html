@@ -140,7 +140,7 @@
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Cancel">
                     </form>
                     <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/submit|}">
-                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isUnsubmitted() ? '' : ' disabled'}" value="Submit">
+                        <input type="submit" th:class="'btn btn-primary' + ${(assignment.isUnsubmitted() && assignment.isReadyForSubmit()) ? '' : ' disabled'}" value="Submit">
                     </form>
                     <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/decline|}">
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Decline">

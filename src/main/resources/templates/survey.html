@@ -9,10 +9,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-
-
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
@@ -22,26 +18,21 @@
             <div class="d-flex justify-content-between">
                 <h2 th:text="${survey.title}">#survey_title#</h2>
                 <div>
-                  <span class="text-success" th:if="${survey.isSubmittedFor(username)}">
-                          Submitted
-                      </span>
+                 <span class="text-success" th:if="${survey.isSubmittedFor(username)}">
+                         Submitted
+                     </span>
                     <span class="text-danger" th:if="${survey.isNotSubmittedFor(username)}">
-                          Not submitted
-                      </span>
+                         Not submitted
+                     </span>
                 </div>
             </div>
             <p class="text-secondary" th:text="|Published at ${survey.publicationTime}|"></p>
-
-
-
 
             <div class="row">
                 <hr class="col m-auto">
                 <h4 class="col-auto m-auto">Survey Form</h4>
                 <hr class="col m-auto">
             </div>
-
-
 
             <div class="container">
                 <form th:action="@{/submit}" method="post">
@@ -50,7 +41,7 @@
                         <div class="form-group">
                             <label th:text="|Q${loopInfo.index+1}: ${question.questionText}|"></label>
                             <div>
-                                <table th:if="${username == survey.creator.username}" class="table table-bordered mt-2">
+                                <table th:if="${username == survey.creatorUsername}" class="table table-bordered mt-2">
                                     <thead>
                                     <tr>
                                         <th scope="col">Contributor</th>
@@ -64,17 +55,15 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <input th:if="${username != survey.creator.username && survey.isNotSubmittedFor(username)}" type="text" form="submitForm" class="form-control" placeholder="Enter your answer" th:name="${'answers[' + question.questionText + ']'}">
-                                <p th:if="${username != survey.creator.username && survey.isSubmittedFor(username)}">Your answer: <span th:text="${question.userAnswers.get('username')}"></span></p>
+                                <input th:if="${username != survey.creatorUsername && survey.isNotSubmittedFor(username)}" type="text" form="submitForm" class="form-control" placeholder="Enter your answer" th:name="${'answers[' + question.questionText + ']'}">
+                                <p th:if="${username != survey.creatorUsername && survey.isSubmittedFor(username)}">Your answer: <span th:text="${question.userAnswers.get('username')}"></span></p>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
 
-            <form th:if="${username == survey.creator.username}" method="post" th:action="@{/edit}" class="mt-2">
-                <button type="edit" class="btn btn-success">Edit</button>
-            </form>
+            <a th:if="${username.equals(survey.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
             <form th:if="${survey.isNotSubmittedFor(username)}" method="post" th:action="@{/submit}" class="mt-2">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -83,6 +72,3 @@
 </main>
 </body>
 </html>
-
-
-

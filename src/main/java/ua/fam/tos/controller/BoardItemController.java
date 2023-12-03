@@ -139,7 +139,7 @@ public class BoardItemController {
     public String delete(@PathVariable long boardId,
                          @PathVariable long itemId,
                          @RequestParam String redirectUrl) {
-        System.out.println("Deleting...");
+        boardService.deleteItemById(boardId, itemId);
         return "redirect:" + redirectUrl;
     }
 

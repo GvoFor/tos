@@ -30,4 +30,11 @@ public class BoardService {
     public void saveBoard(Board board) {
         repository.save(board);
     }
+
+    public void deleteItemById(long boardId, long itemId) {
+        repository.findById(boardId).ifPresent(board -> {
+            board.deleteItemById(itemId);
+            repository.save(board);
+        });
+    }
 }

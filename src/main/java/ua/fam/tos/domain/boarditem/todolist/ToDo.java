@@ -1,7 +1,7 @@
 package ua.fam.tos.domain.boarditem.todolist;
 import ua.fam.tos.domain.boarditem.BoardItem;
 
-public class ToDo extends BoardItem{
+public class ToDo{
     private ToDoStatus status;
     private String text;
 
@@ -27,5 +27,4 @@ public class ToDo extends BoardItem{
     public void setText(String text) {
         this.text = text;
     }
-
 }

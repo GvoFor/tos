@@ -3,12 +3,15 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class SurveyQuestion {
-    final private String questionText;
-    final private Map<String, String> userAnswers;
+    private String questionText;
+    private Map<String, String> userAnswers;
 
-    public SurveyQuestion(String questionText) {
-        this.questionText = questionText;
+    public SurveyQuestion() {
         this.userAnswers = new HashMap<>();
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
     }
 
     public String getQuestionText() {
@@ -19,6 +22,9 @@ public class SurveyQuestion {
         userAnswers.put(username, answer);
     }
 
+    public void setUserAnswers(Map<String, String> userAnswers) {
+        this.userAnswers = userAnswers;
+    }
     public Map<String, String> getUserAnswers() {
         return userAnswers;
     }

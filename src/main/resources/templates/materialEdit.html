@@ -19,10 +19,9 @@
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{title}" type="text" placeholder="Material title">
-                    </div>
-                    <div class="d-flex justify-content-between">
                         <p class="text-secondary" th:text="|Publised at ${material.publicationTime}|"></p>
                     </div>
+
 
                     <div class="row">
                         <hr class="col m-auto">
@@ -88,7 +87,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
-                    <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Discard</a>
+                    <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Discard</a>
                     <button type="submit" form="materialForm" class="btn btn-success" >Save</button>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">

@@ -15,7 +15,7 @@
     <main>
         <div class="container py-4 d-flex justify-content-center">
             <div class="h-100 p-5 w-75">
-                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/material/save|}">
+                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/material/save|}">
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{title}" type="text" placeholder="Material title">

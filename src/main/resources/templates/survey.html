@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -35,38 +36,45 @@
             </div>
 
             <div class="container">
-                <form th:action="@{/submit}" method="post">
-                    <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
-                    <div th:each="question, loopInfo: ${survey.questions}" class="mt-2">
-                        <div class="form-group">
-                            <label th:text="|Q${loopInfo.index+1}: ${question.questionText}|"></label>
-                            <div>
-                                <table th:if="${username == survey.creatorUsername}" class="table table-bordered mt-2">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Contributor</th>
-                                        <th scope="col">Answer</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="entry : ${question.userAnswers}">
-                                        <td th:text="${entry.key}"></td>
-                                        <td th:text="${entry.value}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <input th:if="${username != survey.creatorUsername && survey.isNotSubmittedFor(username)}" type="text" form="submitForm" class="form-control" placeholder="Enter your answer" th:name="${'answers[' + question.questionText + ']'}">
-                                <p th:if="${username != survey.creatorUsername && survey.isSubmittedFor(username)}">Your answer: <span th:text="${question.userAnswers.get('username')}"></span></p>
-                            </div>
+                <div th:each="question, loopInfo: ${survey.questions}" class="mt-2">
+                    <div class="form-group">
+                        <label th:text="|Q${loopInfo.index+1}: ${question.questionText}|"></label>
+                        <div>
+                            <table th:if="${username == survey.creatorUsername}" class="table table-bordered mt-2">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Contributor</th>
+                                    <th scope="col">Answer</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${survey.submissionStatuses.keySet()}">
+                                    <td th:text="${user}"></td>
+                                    <td><span th:if="${survey.isSubmittedFor(user)}" th:text="${question.userAnswers.get(user)}"></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input th:if="${username != survey.creatorUsername && survey.isNotSubmittedFor(username)}" type="text" form="saveAnswersForm" class="form-control" placeholder="Enter your answer" th:field="*{survey.questions[__${loopInfo.index}__].userAnswers[__${username}__]}">
+                            <p th:if="${username != survey.creatorUsername && survey.isSubmittedFor(username)}">
+                                Your answer: <span th:text="${question.userAnswers.get(username)}"></span>
+                            </p>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
 
-            <a th:if="${username.equals(survey.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
-            <form th:if="${survey.isNotSubmittedFor(username)}" method="post" th:action="@{/submit}" class="mt-2">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+
+            <form hidden id="saveAnswersForm" th:object="${survey}" th:if="${survey.isNotSubmittedFor(username)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/survey/saveAnswers|}"></form>
+            <form hidden id="submitForm" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/submit|}"></form>
+
+            <div class="d-flex gap-2 mt-5">
+                <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary my-auto">Back</a>
+                <a th:if="${username.equals(survey.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
+                <div th:if="${!username.equals(survey.creatorUsername)}" class="d-flex gap-2">
+                    <button form="saveAnswersForm" type="submit" th:class="|btn btn-success + ${survey.isNotSubmittedFor(username)? '': ' disabled'}|">Save answers</button>
+                    <button form="submitForm" type="submit" th:class="|btn btn-primary + ${survey.isNotSubmittedFor(username)? '': ' disabled'}|">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
 </main>

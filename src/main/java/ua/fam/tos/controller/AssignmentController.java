@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.fam.tos.dto.AssignmentDTO;
+import ua.fam.tos.repository.ContributorRepository;
 import ua.fam.tos.service.AssignmentService;
 
 import java.security.Principal;
@@ -13,21 +14,28 @@ import java.security.Principal;
 public class AssignmentController {
 
     private final AssignmentService assignmentService;
+    private final ContributorRepository contributorRepository;
 
-    public AssignmentController(AssignmentService assignmentService) {
+    public AssignmentController(AssignmentService assignmentService, ContributorRepository contributorRepository) {
         this.assignmentService = assignmentService;
+        this.contributorRepository = contributorRepository;
     }
 
     @PostMapping("/assignment/save")
     public String save(@PathVariable long boardId,
-                          @ModelAttribute("assignment") AssignmentDTO assignment) {
-        if (assignment.getId() == -1) {
-            long savedId = assignmentService.save(assignment);
-            return "redirect:/boards/" + boardId + "/items/" + savedId;
+                       @ModelAttribute("assignment") AssignmentDTO assignment) {
+        if (contributorRepository.findContributorByUsername(assignment.getApproverUsername()).isEmpty()) {
+            System.out.println("Approver does not exist");
+            return "assignmentEdit";
         }
 
-        assignmentService.update(assignment);
-        return "redirect:/boards/" + boardId + "/items/" + assignment.getId();
+        if (contributorRepository.findContributorByUsername(assignment.getExecutorUsername()).isEmpty()) {
+            System.out.println("Executor does not exist");
+            return "assignmentEdit";
+        }
+
+        long savedId = assignmentService.save(assignment, boardId);
+        return "redirect:/boards/" + boardId + "/items/" + savedId;
     }
 
     @GetMapping("/assignment/new")

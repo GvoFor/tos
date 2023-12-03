@@ -9,7 +9,7 @@ import ua.fam.tos.service.MaterialService;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/boards/{boardId}/items/{itemId}")
+@RequestMapping("/boards/{boardId}/items")
 public class MaterialController {
 
     private final MaterialService materialService;

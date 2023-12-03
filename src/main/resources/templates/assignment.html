@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="container py-4 d-flex justify-content-center">
+            <div class="h-100 p-5 w-75">
+                <div class="d-flex justify-content-between">
+                    <h2 th:text="${assignment.title}">#assignment_title#</h2>
+                    <div>
+                        <span class="text-success" th:if="${assignment.isApproved()}">
+                            Approved
+                        </span>
+                        <span class="text-primary" th:if="${assignment.isSubmitted()}">
+                            Submitted
+                        </span>
+                        <span class="text-danger" th:if="${assignment.isUnsubmitted()}">
+                            Not submitted
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="text-secondary" th:text="|Publised at ${assignment.publicationTime}|"></p>
+                    <p class="text-secondary" th:text="'Deadline: ' + (${assignment.deadline} ? ${assignment.deadline} : 'Not assigned')"></p>
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Task</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div class="mb-5">
+                    <p th:text="${assignment.text}"></p>
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Attachments</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div th:each="attachment : ${assignment.creatorAttachments}">
+                    <div class="d-flex gap-5 mt-1">
+                        <form class="d-flex justify-content-center align-items-center gap-1" method="get" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text text-primary" viewBox="0 0 16 16">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto" th:if="${username.equals(assignment.executorUsername)}">Your Attachments</h4>
+                    <h4 class="col-auto m-auto" th:if="${!username.equals(assignment.executorUsername)}">Executor Attachments</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div th:each="attachment : ${assignment.executorAttachments}">
+                    <div class="d-flex gap-5 mt-1">
+                        <form class="d-flex justify-content-center align-items-center gap-1" method="get" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text text-primary" viewBox="0 0 16 16">
+                                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
+                        </form>
+                        <form th:if="${username == assignment.executorUsername}" class="d-flex justify-content-center align-items-center" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}/delete|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}/edit|">
+                            <input  type="submit" class="btn-close" aria-label="Close" value="" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mb-3 mt-2" th:if="${username.equals(assignment.executorUsername) and assignment.isUnsubmitted()}">
+                    <form class="d-flex gap-2" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
+                        <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                        <input class="form-control w-auto" type="file" name="file" id="attachForm">
+                        <input type="submit" class="btn btn-outline-secondary" value="Attach"/>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Roles</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div class="d-flex justify-content-evenly align-items-center gap-5 mt-3">
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Creator</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${assignment.creatorUsername + (assignment.creatorUsername == username ? ' (You)' : '')}"></span>
+                        </div>
+                    </div>
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Approver</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${assignment.approverUsername + (assignment.approverUsername == username ? ' (You)' : '')}"></span>
+                        </div>
+                    </div>
+                    <div class="rounded bg-dark p-3 w-100">
+                        <h4 class="text-center text-light">Executor</h4>
+                        <div class="text-center text-light">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${assignment.executorUsername + (assignment.executorUsername == username ? ' (You)' : '')}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center mt-2 gap-2">
+                    <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Back</a>
+                    <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/cancel|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Cancel">
+                    </form>
+                    <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/submit|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${(assignment.isUnsubmitted() && assignment.isReadyForSubmit()) ? '' : ' disabled'}" value="Submit">
+                    </form>
+                    <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/decline|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Decline">
+                    </form>
+                    <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/approve|}">
+                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Approve">
+                    </form>
+                    <a th:if="${username.equals(assignment.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Material</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="container py-4 d-flex justify-content-center">
+        <div class="h-100 p-5 w-75">
+            <div class="d-flex justify-content-between">
+                <h2 th:text="${material.title}">#material_title#</h2>
+            </div>
+            <p class="text-secondary" th:text="|Publised at ${material.publicationTime}|"></p>
+            <div class="row">
+                <hr class="col m-auto">
+                <h4 class="col-auto m-auto">Material</h4>
+                <hr class="col m-auto">
+            </div>
+
+            <div class="mb-5">
+                <p th:text="${material.text}"></p>
+            </div>
+
+            <div class="row">
+                <hr class="col m-auto">
+                <h4 class ="col-auto m-auto">Attachments to material</h4>
+                <hr class="col m-auto">
+            </div>
+
+            <div th:each="attachment : ${material.attachments}">
+                <div class="d-flex gap-5 mt-1">
+                    <form class="d-flex justify-content-center align-items-center gap-1" method="get" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}|}">
+                        <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text text-primary" viewBox="0 0 16 16">
+                            <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+                            <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+                        </svg>
+                        <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-2 gap-2">
+                <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Back</a>
+                <a th:if="${username.equals(material.creatorUsername)}" th:href="@{|/boards/${boardId}/items/${itemId}/edit|}" class="btn btn-success">Edit</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -100,11 +100,11 @@ public class Assignment extends BoardItem implements Approvable, Submittable, At
             case APPROVED -> throw new SubmissionException("An assignment was already approved");
             case SUBMITTED -> throw new SubmissionException("An assignment was already submitted");
         }
-        if (attachments.isEmpty()) {
-            status = AssignmentStatus.SUBMITTED;
-        } else {
+
+        if (attachments.stream().noneMatch(attachment -> attachment.getAttacher().equals(getExecutor()))) {
             throw new SubmissionException("Nothing to submit");
         }
+        status = AssignmentStatus.SUBMITTED;
     }
 
     @Override
@@ -156,5 +156,11 @@ public class Assignment extends BoardItem implements Approvable, Submittable, At
             case SUBMITTED -> status = AssignmentStatus.UNSUBMITTED;
             case UNSUBMITTED -> throw new ApprovalException("An assignment wasn't submitted");
         }
+    }
+    @Override
+    public boolean isKnowAboutContributorWithUsername(String username){
+        return (approver.getUsername().equals(username))||
+                (executor.getUsername().equals(username))||
+                (getCreator().getUsername().equals(username));
     }
 }

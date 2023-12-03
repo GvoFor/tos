@@ -12,21 +12,16 @@ public class Board {
 
     private final List<BoardItem> items;
 
-    private final List<Contributor> contributors;
+    private Contributor owner;
 
-
-    public Board(Contributor creator) {
-        this();
-        contributors.add(creator);
-    }
+    private final Set<Contributor> contributors;
 
     public Board() {
         id = 0;
         title = "";
-        contributors = new ArrayList<>();
+        contributors = new HashSet<>();
         items = new ArrayList<>();
     }
-
 
     public long getId() {
         return id;
@@ -63,7 +58,7 @@ public class Board {
     }
 
     public void addContributor(Contributor contributor) {
-        if (!contributors.contains(contributor)){
+        if (!contributor.equals(owner)) {
             contributors.add(contributor);
         }
     }
@@ -73,24 +68,19 @@ public class Board {
     }
 
     public List<Contributor> getAllContributors() {
-        return contributors;
+        return contributors.stream().toList();
     }
 
     public boolean hasContributorWithUsername(String username) {
-        return contributors.stream()
+        return owner.getUsername().equals(username) || contributors.stream()
                 .anyMatch(contributor -> contributor.getUsername().equals(username));
     }
 
-    public Optional<Contributor> getOwner() {
-        if (contributors.isEmpty()) {
-            return Optional.empty();
-        } else {
-            return Optional.of(contributors.get(0));
-        }
+    public Contributor getOwner() {
+        return owner;
     }
 
     public void setOwner(Contributor owner) {
-        contributors.remove(owner);
-        contributors.add(0,owner);
+        this.owner = owner;
     }
 }

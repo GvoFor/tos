@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="container py-4">
+        <div class="h-100 p-5 bg-body-secondary border rounded-3">
+            <div>
+                <div id="title1" class="d-flex gap-3">
+                    <h2 th:text="${board.title}" class="my-auto">#board_title#</h2>
+                    <button id="renameButton" th:if="${username == board.ownerName}" class="btn btn-primary">Rename</button>
+                </div>
+                <div id="title2" class="d-none gap-3">
+                    <form hidden id="renameForm" method="post" th:action="@{|/boards/${board.id}/rename|}"></form>
+                    <input class="h3 my-auto" form="renameForm" type="text" name="newTitle" th:value="${board.title}" placeholder="Board title">
+                    <input form="renameForm" type="submit" class="btn btn-primary" value="Rename">
+                </div>
+
+            </div>
+            <hr>
+            <div th:each="item : ${board.items}">
+                <div class="mt-2 p-4 bg-white border rounded-3">
+                    <h3 th:text="${item.title}">#item_title#</h3>
+                    <p class="text-secondary">Published at: <span th:text="${item.publicationTime}">#item_publication_time#</span></p>
+                    <div class="d-flex gap-2">
+                        <a th:href="@{|/boards/${board.id}/items/${item.id}|}" class="btn btn-outline-secondary">View</a>
+                        <a th:if="${username == board.ownerName}" th:href="@{|/boards/${board.id}/items/${item.id}/edit|}" class="btn btn-outline-success">Edit</a>
+                        <form hidden id="deleteForm" method="post" th:action="@{|/boards/${board.id}/items/${item.id}/delete|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${board.id}/items|">
+                        </form>
+                        <input th:if="${username == board.ownerName}" form="deleteForm" type="submit" class="btn btn-outline-danger" value="Delete">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 dropup" th:if="${username == board.ownerName}">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Create new
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/material/new|}">Material</a>
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/assignment/new|}">Assignment</a>
+                    <a class="dropdown-item" th:href="@{|/boards/${board.id}/items/survey/new|}">Survey</a>
+                </div>
+            </div>
+
+            <div th:if="${username == board.ownerName}">
+                <div class="row">
+                    <hr class="col m-auto">
+                    <h4 class="col-auto m-auto">Contributors</h4>
+                    <hr class="col m-auto">
+                </div>
+
+                <div id="contributorsContainer" th:each="contributorName : ${board.contributorNames}">
+                    <div class="d-flex align-items-center gap-2 mt-1">
+                        <div class="d-flex justify-content-center align-items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                            <span th:text="${contributorName}"></span>
+                        </div>
+                        <form class="d-flex align-items-center" method="post" th:action="@{|/boards/${board.id}/contributors/delete|}">
+                            <input type="hidden" name="contributorName" th:value="${contributorName}">
+                            <input type="submit" class="btn-close" aria-label="Close" value="" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mb-3 mt-2">
+                    <div class="d-flex gap-2">
+                        <form hidden id="newContributorForm" method="post" th:action="@{|/boards/${board.id}/contributors/new|}"></form>
+                        <input form="newContributorForm" class="form-control w-auto" type="text" name="newContributorName" placeholder="Contributor username">
+                        <button form="newContributorForm" class="btn btn-outline-secondary">Add contributor</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#renameButton").click(event => {
+            let title1 = $("#title1")
+            title1.removeClass("d-flex")
+            title1.addClass("d-none")
+
+            let title2 = $("#title2")
+            title2.removeClass("d-none")
+            title2.addClass("d-flex")
+        })
+    </script>
+</main>
+</body>
+</html>

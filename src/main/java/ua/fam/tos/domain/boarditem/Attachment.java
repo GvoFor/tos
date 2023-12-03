@@ -1,10 +1,13 @@
 package ua.fam.tos.domain.boarditem;
 
+import ua.fam.tos.domain.Contributor;
+
 public class Attachment {
 	
 	private long id;
 	private String title;
 	private String sourcePath;
+	private Contributor attacher;
 	
 	public long getId() {
 		return id;
@@ -29,5 +32,12 @@ public class Attachment {
 	public void setSourcePath(String sourcePath) {
 		this.sourcePath = sourcePath;
 	}
-	
+
+	public Contributor getAttacher() {
+		return attacher;
+	}
+
+	public void setAttacher(Contributor attacher) {
+		this.attacher = attacher;
+	}
 }

@@ -15,14 +15,13 @@
     <main>
         <div class="container py-4 d-flex justify-content-center">
             <div class="h-100 p-5 w-75">
-                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/material/save|}">
+                <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/material/save|}">
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{title}" type="text" placeholder="Material title">
-                    </div>
-                    <div class="d-flex justify-content-between">
                         <p class="text-secondary" th:text="|Publised at ${material.publicationTime}|"></p>
                     </div>
+
 
                     <div class="row">
                         <hr class="col m-auto">
@@ -88,11 +87,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
-                    <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Discard</a>
+                    <a th:if="${itemId == null}" th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Discard</a>
+                    <a th:if="${itemId != null}" th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Back</a>
                     <button type="submit" form="materialForm" class="btn btn-success" >Save</button>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <input type="submit" th:class="'btn btn-danger' + (${itemId == null} ? ' disabled' : '')" value="Delete">
                     </form>
                 </div>
 

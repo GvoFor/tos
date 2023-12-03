@@ -38,17 +38,19 @@
             </div>
 
             <div class="mb-3 mt-2">
-                <form id="addQuestionForm" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/survey/addQuestion|}">
+                <form th:if="${itemId != null}" id="addQuestionForm" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/survey/addQuestion|}">
                     <button form="addQuestionForm" class="btn btn-outline-secondary">Add question</button>
                 </form>
+                <p class="" th:if="${itemId == null}">Save the survey in order to add questions...</p>
             </div>
 
             <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
-                <a th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Back</a>
+                <a th:if="${itemId == null}" th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Discard</a>
+                <a th:if="${itemId != null}" th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Back</a>
                 <button type="submit" form="surveyForm" class="btn btn-success" >Save</button>
                 <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">
-                    <input type="submit" class="btn btn-danger" value="Delete">
+                    <input type="submit" th:class="'btn btn-danger' + (${itemId == null} ? ' disabled' : '')" value="Delete">
                 </form>
             </div>
         </div>

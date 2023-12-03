@@ -80,6 +80,10 @@
                             </svg>
                             <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
                         </form>
+                        <form th:if="${username == assignment.executorUsername}" class="d-flex justify-content-center align-items-center" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}/delete|}">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}/edit|">
+                            <input  type="submit" class="btn-close" aria-label="Close" value="" />
+                        </form>
                     </div>
                 </div>
 
@@ -136,7 +140,7 @@
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Cancel">
                     </form>
                     <form th:if="${username.equals(assignment.executorUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/submittion/submit|}">
-                        <input type="submit" th:class="'btn btn-primary' + ${assignment.isUnsubmitted() ? '' : ' disabled'}" value="Submit">
+                        <input type="submit" th:class="'btn btn-primary' + ${(assignment.isUnsubmitted() && assignment.isReadyForSubmit()) ? '' : ' disabled'}" value="Submit">
                     </form>
                     <form th:if="${username.equals(assignment.approverUsername)}" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/approving/decline|}">
                         <input type="submit" th:class="'btn btn-primary' + ${assignment.isSubmitted() ? '' : ' disabled'}" value="Decline">

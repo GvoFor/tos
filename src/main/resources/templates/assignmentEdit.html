@@ -18,8 +18,8 @@
                 <form id="assignmentForm" th:object="${assignment}" method="post" th:action="@{|/boards/${boardId}/items/assignment/save|}">
                     <div class="d-flex justify-content-between">
                         <input th:field="*{id}" type="hidden" th:value="*{id}">
-                        <input th:field="*{title}" type="text" placeholder="Assignment title">
-                        <select th:field="*{status}">
+                        <input class="h3" th:field="*{title}" type="text" placeholder="Assignment title">
+                        <select class="my-auto" th:field="*{status}">
                             <option th:each="status : ${T(ua.fam.tos.domain.boarditem.assignment.AssignmentStatus).values()}"
                                     th:value="${status}"
                                     th:text="${status}">
@@ -114,11 +114,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center mt-5 gap-5">
-                    <a th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Discard</a>
+                    <a th:if="${itemId == null}" th:href="@{|/boards/${boardId}/items|}" class="btn btn-secondary">Discard</a>
+                    <a th:if="${itemId != null}" th:href="@{|/boards/${boardId}/items/${itemId}|}" class="btn btn-secondary">Back</a>
                     <button type="submit" form="assignmentForm" class="btn btn-success" >Save</button>
                     <form method="post" th:action="@{|/boards/${boardId}/items/${itemId}/delete|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items|">
-                        <input type="submit" class="btn btn-danger" value="Delete">
+                        <input type="submit" th:class="'btn btn-danger' + (${itemId == null} ? ' disabled' : '')" value="Delete">
                     </form>
                 </div>
 

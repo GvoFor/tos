@@ -15,7 +15,7 @@ public class Material extends BoardItem implements Attachable {
     private String text;
     private final List<Attachment> attachments;
 
-    private List<Contributor> viewerList;
+    private final List<Contributor> viewerList;
 
     public Material(){
         text = "";
@@ -62,7 +62,6 @@ public class Material extends BoardItem implements Attachable {
 
     @Override
     public boolean isKnowAboutContributorWithUsername(String username) {
-        return (viewerList.stream().anyMatch(viewer -> viewer.getUsername().equals(username)))||
-                (getCreator().getUsername().equals(username));
+        return true;
     }
 }

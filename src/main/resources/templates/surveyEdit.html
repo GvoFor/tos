@@ -38,9 +38,10 @@
             </div>
 
             <div class="mb-3 mt-2">
-                <form id="addQuestionForm" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/survey/addQuestion|}">
+                <form th:if="${itemId != null}" id="addQuestionForm" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/survey/addQuestion|}">
                     <button form="addQuestionForm" class="btn btn-outline-secondary">Add question</button>
                 </form>
+                <p class="" th:if="${itemId == null}">Save the survey in order to add questions...</p>
             </div>
 
             <div class="d-flex justify-content-center align-items-center mt-5 gap-5">

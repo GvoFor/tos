@@ -41,6 +41,7 @@ public class AssignmentDTO {
                 .filter(attachment -> attachment.getAttacher().equals(assignment.getExecutor()))
                 .map(AttachmentDTO::new)
                 .toList();
+        id = assignment.getId();
     }
 
     public long getId() {

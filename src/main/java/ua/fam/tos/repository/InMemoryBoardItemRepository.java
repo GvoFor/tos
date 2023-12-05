@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public class InMemoryBoardItemRepository implements BoardItemRepository {
 
-    private long counter;
+    private long counter = 1;
     private final BoardRepository boardRepository;
 
     public InMemoryBoardItemRepository(BoardRepository boardRepository) {

@@ -33,6 +33,9 @@ public class SurveyService {
         Survey survey = new Survey();
         survey.setCreator(contributorRepository.findContributorByUsername(dto.getCreatorUsername()).get());
         survey.setTitle(dto.getTitle());
+        if (dto.getId() > 0) {
+            survey.setId(dto.getId());
+        }
         survey.setSubmissionStatuses(dto.getSubmissionStatuses());
         survey.setQuestions(dto.getQuestions().stream()
                 .map(surveyQuestionDTO -> {

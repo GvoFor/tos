@@ -27,6 +27,9 @@ public class MaterialService {
         material.setCreator(contributorRepository.findContributorByUsername(dto.getCreatorUsername()).get());
         material.setTitle(dto.getTitle());
         material.setText(dto.getText());
+        if (dto.getId() > 0) {
+            material.setId(dto.getId());
+        }
         material.setPublicationTime(new Date());
         return boardItemRepository.save(material, boardId);
     }

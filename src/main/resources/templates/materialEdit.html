@@ -18,6 +18,7 @@
                 <form id="materialForm" th:object="${material}" method="post" th:action="@{|/boards/${boardId}/items/material/save|}">
                     <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                     <div class="d-flex justify-content-between">
+                        <input th:field="*{id}" type="hidden">
                         <input th:field="*{title}" type="text" placeholder="Material title">
                         <p class="text-secondary" th:text="|Publised at ${material.publicationTime}|"></p>
                     </div>

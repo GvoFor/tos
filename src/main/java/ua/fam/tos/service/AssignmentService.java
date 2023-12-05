@@ -23,6 +23,9 @@ public class AssignmentService {
         assignment.setCreator(contributorRepository.findContributorByUsername(dto.getCreatorUsername()).get());
         assignment.setApprover(contributorRepository.findContributorByUsername(dto.getApproverUsername()).get());
         assignment.setExecutor(contributorRepository.findContributorByUsername(dto.getExecutorUsername()).get());
+        if (dto.getId() > 0) {
+            assignment.setId(dto.getId());
+        }
         assignment.setTitle(dto.getTitle());
         assignment.setText(dto.getText());
         assignment.setStatus(dto.getStatus());

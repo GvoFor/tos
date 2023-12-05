@@ -81,7 +81,7 @@
                             <input type="submit" class="d-inline m-auto page-link link-primary" th:value="${attachment.title}" />
                         </form>
                         <form th:if="${username == assignment.executorUsername && assignment.isUnsubmitted()}" class="d-flex justify-content-center align-items-center" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/${attachment.id}/delete|}">
-                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}/edit|">
+                            <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}|">
                             <input  type="submit" class="btn-close" aria-label="Close" value="" />
                         </form>
                     </div>

@@ -56,20 +56,22 @@ public class AttachmentController {
     @PostMapping("/{attachmentId}/delete")
     public String deleteAttachment(@PathVariable long boardId,
                                    @PathVariable long itemId,
-                                   @PathVariable long attachmentId) {
+                                   @PathVariable long attachmentId,
+                                   @RequestParam String redirectUrl) {
         attachmentService.deleteById(boardId, itemId, attachmentId);
-        return "redirect:/boards/" + boardId + "/items/" + itemId;
+        return "redirect:" + redirectUrl;
     }
 
     @PostMapping("/upload")
     public String uploadAttachment(@PathVariable long boardId,
                                    @PathVariable long itemId,
+                                   @RequestParam String redirectUrl,
                                    @RequestParam("file") MultipartFile file,
                                    Principal attacher) {
         if (!file.isEmpty()) {
             attachmentService.upload(boardId, itemId, file, attacher.getName());
         }
-        return "redirect:/boards/" + boardId + "/items/" + itemId;
+        return "redirect:" + redirectUrl;
     }
 
 }

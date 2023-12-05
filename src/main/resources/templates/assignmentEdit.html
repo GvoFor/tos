@@ -66,11 +66,12 @@
                 </div>
 
                 <div class="mb-3 mt-2">
-                    <form class="d-flex gap-2" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
+                    <form th:if="${itemId != null}" class="d-flex gap-2" enctype="multipart/form-data" method="post" th:action="@{|/boards/${boardId}/items/${itemId}/attachments/upload|}">
                         <input type="hidden" name="redirectUrl" th:value="|/boards/${boardId}/items/${itemId}/edit|">
                         <input class="form-control w-auto" type="file" name="file" id="attachForm">
                         <input type="submit" class="btn btn-outline-secondary" value="Attach"/>
                     </form>
+                    <p th:if="${itemId == null}">Save the assignment in order to add attachments...</p>
                 </div>
 
                 <div class="row">

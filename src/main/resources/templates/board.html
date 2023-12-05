@@ -35,10 +35,10 @@
                     <div class="d-flex gap-2">
                         <a th:href="@{|/boards/${board.id}/items/${item.id}|}" class="btn btn-outline-secondary">View</a>
                         <a th:if="${username == board.ownerName}" th:href="@{|/boards/${board.id}/items/${item.id}/edit|}" class="btn btn-outline-success">Edit</a>
-                        <form hidden id="deleteForm" method="post" th:action="@{|/boards/${board.id}/items/${item.id}/delete|}">
+                        <form method="post" th:action="@{|/boards/${board.id}/items/${item.id}/delete|}">
                             <input type="hidden" name="redirectUrl" th:value="|/boards/${board.id}/items|">
+                            <input th:if="${username == board.ownerName}" type="submit" class="btn btn-outline-danger" value="Delete">
                         </form>
-                        <input th:if="${username == board.ownerName}" form="deleteForm" type="submit" class="btn btn-outline-danger" value="Delete">
                     </div>
                 </div>
             </div>

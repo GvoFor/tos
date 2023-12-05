@@ -31,7 +31,7 @@ public class InMemoryBoardItemRepository implements BoardItemRepository {
             for (int i = 0; i < items.size(); i++) {
                 if (items.get(i).getId() == item.getId()) {
                     items.set(i, item);
-                    return i;
+                    return i + 1;
                 }
             }
         }
